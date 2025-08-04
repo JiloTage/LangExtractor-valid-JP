@@ -1,0 +1,10 @@
+langextract
+requests
+beautifulsoup4
+pandas
+plotly
+python-dotenv
+typing-extensions
+dataclasses-json
+tqdm
+colorama

@@ -287,4 +287,6 @@ tags
 .history
 .ionide
 
+data
+
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,visualstudiocode,vim,python,jupyternotebooks,venv,virtualenv

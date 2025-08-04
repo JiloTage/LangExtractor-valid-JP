@@ -1,183 +1,150 @@
-# Python-Project-Template
+# LangExtract 日本語テキスト解析
 
-[![CI](https://github.com/mjun0812/python-project-template/actions/workflows/ci.yml/badge.svg)](https://github.com/mjun0812/python-project-template/actions/workflows/ci.yml)
+Google LangExtractライブラリを使用して、青空文庫の日本語小説から構造化情報を抽出するプロジェクトです。
 
-A simple modern Python project template.
+## 🎯 目的
 
-This repository is created by [mjun0812/python-copier-template](https://github.com/mjun0812/python-copier-template) using [copier](https://copier.readthedocs.io/).
+- LangExtractライブラリの日本語テキストに対する挙動調査
+- 青空文庫の小説から登場人物、感情、関係性を自動抽出
+- 日本語特有の表現（敬語、一人称、間接表現等）への対応確認
 
-[Article](https://mjunya.com/en/posts/2025-06-15-python-template/) [日本語記事](https://zenn.dev/mjun0812/articles/0ae2325d40ed20)
+## 📋 機能
 
-## Features
+1. **青空文庫からのテキスト取得**
+   - ルビ・注釈の自動除去
+   - テキストの正規化処理
 
-- 🚀 **Modern Python**: Support for Python 3.10-3.13
-- 📦 **uv Package Manager**: Fast and reliable package management with [uv](https://github.com/astral-sh/uv)
-- 🐳 **Docker Support**: Complete Docker development environment
-- 📦 **Devcontainer Support**: VS Code devcontainer for consistent development
-- ✨ **AI Editor Support**: [Cursor rules](https://docs.cursor.com/context/rules) and
-  [CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/overview) included for AI-powered development
-- 📝 **Type Hints**: Full type annotation support with modern Python features
-- 🔍 **Code Quality**: Pre-configured Ruff for linting and formatting
-- 🧪 **Testing**: pytest setup with example tests
-- 🔧 **Pre-commit Hooks**: Automated code quality checks
-- 🏗️ **CI Ready**: GitHub Actions workflows included
+2. **構造化情報の抽出**
+   - 登場人物（名前、性別、年齢、職業、性格）
+   - 感情表現（種類、主体、対象、強度）
+   - 人物関係（関係の種類、方向性）
 
-## Quick Start
+3. **結果の分析・可視化**
+   - CLI表示
+   - HTMLレポート生成
+   - JSON/CSV形式での保存
 
-### Pre-Requirements
+## 🚀 クイックスタート
 
-- [uv](https://docs.astral.sh/uv/): Fast Python package installer
-
-
-### SuperClaudeとSerenaの使い方
-
-#### Serena MCPサーバーのセットアップ
-
-Serenaは、Claude Codeでインテリジェントなコード編集と検索を可能にするMCPサーバーです。
+### 1. 必要な準備
 
 ```bash
-# Serena MCPサーバーを追加
-claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project $(pwd)
-```
-
-#### SuperClaudeフレームワークについて
-
-SuperClaudeは、Claude Codeの能力を拡張する包括的なフレームワークです。このプロジェクトには、`.superclaude/`ディレクトリに以下のコンポーネントが含まれています：
-
-- **COMMANDS.md**: `/analyze`, `/build`, `/implement`などのスラッシュコマンド
-- **FLAGS.md**: `--think`, `--uc`, `--persona-architect`などの動作調整フラグ
-- **PERSONAS.md**: 特定タスクに特化した11種類のAIペルソナ
-- **MCP.md**: Serenaを含むMCPサーバー統合
-- **ORCHESTRATOR.md**: インテリジェントなタスク振り分けシステム
-- **MODES.md**: タスク管理、内省、トークン効率化の動作モード
-
-#### 基本的な使い方
-
-**1. コード分析**
-```bash
-# アーキテクチャ分析（アーキテクトペルソナが自動起動）
-/analyze --think
-
-# セキュリティ監査（セキュリティペルソナ使用）
-/analyze --focus security --ultrathink
-```
-
-**2. 機能実装**
-```bash
-# UIコンポーネントの実装（フロントエンドペルソナとMagic MCPが自動起動）
-/implement "ユーザー認証フォーム" --type component
-
-# APIエンドポイントの実装
-/implement "REST API for user management" --type api
-```
-
-**3. コード改善**
-```bash
-# 体系的なコード改善（Wave orchestrationが自動起動）
-/improve --wave-mode
-
-# パフォーマンス最適化
-/improve --focus performance --persona-performance
-```
-
-**4. 効率的な出力**
-```bash
-# 圧縮出力モード（トークン使用量を30-50%削減）
-/analyze --uc
-
-# 詳細な思考プロセスを表示
-/analyze --introspect
-```
-
-#### 高度な機能
-
-**Wave Orchestration**: 複雑度が0.7以上の大規模タスクで自動的に起動し、複数段階での実行を管理します。
-
-**自動ペルソナ選択**: タスクの内容に基づいて最適なペルソナが自動的に選択されます：
-- フロントエンド作業 → frontend ペルソナ
-- API開発 → backend ペルソナ
-- デバッグ → analyzer ペルソナ
-- リファクタリング → refactorer ペルソナ
-
-**MCP統合**: 
-- Serena: コードナビゲーションと編集
-- Sequential: 複雑な分析とマルチステップ推論
-- Context7: 公式ドキュメントとベストプラクティス
-- Magic: UIコンポーネント生成
-
-
-### Development Setup
-
-```bash
-# Install dependencies
+# 依存関係のインストール
 uv sync
+## or pip install -r requirements.txt
 
-# Install pre-commit hooks
-uv run pre-commit install
-
-# Run tests
-uv run pytest
-
-# Run formatting and linting (automatically runs on commit)
-uv run ruff format .
-uv run ruff check .
-# Auto Fix
-uv run ruff check . --fix
+# 環境変数の設定
+cp .env.example .env
+# .envファイルを編集してAPIキーとモデルを設定
 ```
 
-### Docker Development Setup
-
-The template includes a complete Docker setup:
+### 2. 実行
 
 ```bash
-# create uv.lock file
-uv sync
+# デフォルト（羅生門、環境変数のモデル）で実行
+uv run python quick_test.py
 
-# use the provided scripts
-./docker/build.sh
-./docker/run.sh # or./docker/run.sh (Command)
+# 作品を指定して実行
+uv run python quick_test.py "走れメロス"
 
-# Build and run with Docker Compose
-docker compose build
-docker compose up
+# モデルを指定して実行
+uv run python quick_test.py "羅生門" --model "gpt-4o"
+uv run python quick_test.py "坊っちゃん" --model "gemini-1.5-pro"
 ```
 
-### VS Code Devcontainer
+### 3. 利用可能な作品
 
-Open the project in VS Code and use the "Reopen in Container" command for a fully configured development environment.
+- 羅生門（芥川龍之介）
+- 坊っちゃん（夏目漱石）
+- 走れメロス（太宰治）
+- 銀河鉄道の夜（宮沢賢治）
 
-### Update Template
+## 📁 プロジェクト構造
 
-Thit template is created by [mjun0812/python-copier-template](https://github.com/mjun0812/python-copier-template).
-You can apply update from it.
-
-```bash
-cd your-project-name
-uvx copier update -A
 ```
-
-## Project Structure
-
-```text
-your-project/
+langextract-jp-analysis/
 ├── src/
-│   └── your_project/          # Main package
-├── tests/                     # Test files
-├── docker/                    # Docker configuration
-├── compose.yml               # Docker Compose setup
-├── pyproject.toml            # Project configuration
-└── README.md                 # Project documentation
+│   ├── aozora_fetcher.py      # 青空文庫からテキスト取得
+│   ├── text_extractor.py      # LangExtract実行
+│   └── result_analyzer.py     # 結果分析・可視化
+├── data/
+│   └── results/               # 抽出結果の保存
+├── docs/                      # 設計ドキュメント
+├── quick_test.py              # クイック実行スクリプト
+└── requirements.txt           # 依存関係
 ```
 
-## Q&A
+## 📊 出力例
 
-### Why don't you use a type checker?
+### CLI出力
+```
+👤 登場人物:
+  • 下人
+    性別: 男性
+    年齢: 若者
+    職業: 使用人（推定）
+    性格: 迷いやすい、生きることへの執着
 
-I'm waiting for stable release of [`ty`](https://github.com/astral-sh/ty).
-You can install and use your preferred type checker.
+💭 感情分析:
+  • 恐れ: 3回
+  • 不安: 2回
+  • 決意: 1回
 
-## Support
+🔗 人物関係:
+  • 下人 → 老婆: 対立関係
+```
 
-- 📖 [Copier Documentation](https://copier.readthedocs.io/)
-- 🐍 [uv Documentation](https://docs.astral.sh/uv/)
-- 🔍 [Ruff Documentation](https://docs.astral.sh/ruff/)
+### ファイル出力
+作品ごとに `data/results/(作品名)/` ディレクトリに保存されます：
+
+- `data/results/羅生門/extraction_results.json` - 全結果
+- `data/results/羅生門/characters.csv` - 登場人物一覧
+- `data/results/羅生門/emotions.csv` - 感情一覧
+- `data/results/羅生門/relationships.csv` - 関係性一覧
+- `data/results/羅生門/report.html` - HTMLレポート
+
+## ⚙️ カスタマイズ
+
+### モデルの変更
+
+#### 方法1: .envファイルで設定
+```bash
+# .envファイルを編集
+LANGEXTRACT_MODEL=gpt-4o
+```
+
+#### 方法2: コマンドライン引数で指定
+```bash
+uv run python quick_test.py "羅生門" --model "gpt-4o"
+```
+
+## 📝 注意事項
+
+- Gemini APIの利用にはAPIキーが必要です
+- 長文の解析には時間がかかる場合があります
+- APIの利用制限に注意してください
+
+## 🔍 今後の拡張案
+
+- [ ] より多くの作品への対応
+- [ ] 抽出精度の定量評価
+- [ ] 複数モデルの比較機能
+- [ ] ストリーミング処理対応
+- [ ] Web UIの追加
+
+## 🐛 既知の問題と対応
+
+### JSON解析エラー（修正済み）
+- **問題**: 大容量テキスト処理時にLangExtractでJSON解析エラーが発生
+- **対応**: テキストチャンク化による分割処理とエラーハンドリングを実装
+- **効果**: 5000文字以上のテキストでも安定して処理可能
+
+### API制限対応（改善済み）
+- **問題**: Gemini APIの無料枠制限（15回/分）によるエラー
+- **対応**: レート制限検出と自動リトライ機能を実装
+- **効果**: チャンク間待機とエラー時60秒待機でレート制限を回避
+
+### 重複データ対策（実装済み）
+- **問題**: チャンク処理で登場人物・関係性の重複が発生
+- **対応**: 重複除去アルゴリズムを実装
+- **効果**: 名前正規化による精度向上と結果の整合性確保

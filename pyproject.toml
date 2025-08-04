@@ -7,6 +7,16 @@ authors = [{ name = "Junya Morioka", email = "mjun@mjunya.com" }]
 requires-python = ">=3.12"
 dependencies = [
     "superclaude>=3.0.0.2",
+    "langextract",
+    "requests",
+    "beautifulsoup4",
+    "pandas",
+    "plotly",
+    "python-dotenv",
+    "typing-extensions",
+    "dataclasses-json",
+    "tqdm",
+    "colorama",
 ]
 
 [build-system]

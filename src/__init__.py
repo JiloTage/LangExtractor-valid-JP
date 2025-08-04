@@ -1,0 +1,1 @@
+# LangExtract Japanese Text Analysis Package
